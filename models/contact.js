@@ -21,6 +21,10 @@ const contactSchema=mongoose.Schema({
     type:{
         type:String,
         default:"personal"
+    },
+    date:{
+       type:Date,
+       default:Date(Date.now())
     }
 })
 module.exports=mongoose.model("contact",contactSchema)
