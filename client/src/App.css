@@ -32,7 +32,22 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
+.p {
+  color: white
+}
+
+.navdetails {
+  list-style: none;
+  
+}
+
+.navdetails li {
+  float: left;
+}
+.list{list-style: none;}
