@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import  Contacts  from '../contact/Contact'
+import ContactFilter from '../contact/ContactFilter'
 import ContactForm from '../contact/ContactForm'
 export const Home = () => {
   return (
@@ -8,6 +9,9 @@ export const Home = () => {
         <ContactForm/>
       </div>
       <div className='col'>
+        <div >
+          <ContactFilter/>
+        </div>
         <Contacts/>
       </div>
     </div>

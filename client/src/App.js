@@ -2,21 +2,24 @@ import { Navbar } from "./component/layout/Navbar";
 import { Home } from "./component/layout/Home";
 import { About } from "./component/layout/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ContactState from "./context/contact/ContactState"
+import ContactState from "./context/contact/ContactState";
+import AuthState from "./context/auth/AuthState";
 
 function App() {
   return (
-    <ContactState>
-    <BrowserRouter>
-      <Navbar />
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-    </ContactState>
+    <AuthState>
+      <ContactState>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </ContactState>
+    </AuthState>
   );
 }
 
