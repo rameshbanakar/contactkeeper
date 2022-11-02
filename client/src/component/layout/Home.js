@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import Register from '../auth/Register'
 import  Contacts  from '../contact/Contact'
 import ContactFilter from '../contact/ContactFilter'
 import ContactForm from '../contact/ContactForm'

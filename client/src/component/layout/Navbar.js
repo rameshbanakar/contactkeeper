@@ -7,10 +7,16 @@ export const Navbar = ({ title, icon }) => {
       <i className={icon}>{title}</i>
       <ul className="navdetails">
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" className="navitems">Home</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/about" className="navitems">About</Link>
+        </li>
+        <li>
+          <Link to="/register" className="navitems">Register</Link>
+        </li>
+        <li>
+          <Link to="/login" className="navitems">Login</Link>
         </li>
       </ul>
     </div>

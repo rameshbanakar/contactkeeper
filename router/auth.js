@@ -7,6 +7,13 @@ const auth = require("../middleware/auth");
 const { check, validationResult } = require("express-validator/check");
 const User = require("../models/User");
 
+//added from stack overflow
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
