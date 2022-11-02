@@ -29,34 +29,43 @@ const AuthState = (props) => {
       },
     };
     try {
-      console.log(formData)
+      console.log(formData);
       const res = await axios.post("/api/users", formData, config);
-      console.log(res)
+      console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
     } catch (error) {
-      
       dispatch({
         //register fail
-        
-        type:REGISTER_FAILE,
-        payload:error.response.data.msg
-      })
-     
+
+        type: REGISTER_FAILE,
+        payload: error.response.data.msg,
+      });
     }
   };
-  
+
   //user loaded
-  //auth error
+  const loadUser = async () => {
+    //@todo-load token into global headers
+
+    try {
+      const res = await axios.get("/api/auth");
+      dispatch({ type: USER_LOADED, payload: res.data });
+    } catch (err) {
+      //auth error
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+
   //login success
   //login fail
   //logout
   //clear error
-  const clearError=()=>{
-    dispatch({type:CLEAR_ERROR})
-  }
+  const clearError = () => {
+    dispatch({ type: CLEAR_ERROR });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -66,7 +75,7 @@ const AuthState = (props) => {
         error: state.error,
         user: state.user,
         clearError,
-        register
+        register,
       }}
     >
       {props.children}
