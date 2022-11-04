@@ -2,12 +2,12 @@ import React,{useContext} from "react";
 import PropTypes from "prop-types"
 import ContactContext from "../../context/contact/ContactContext";
 const ContactItem = ({ contact, key }) => {
-  const { id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, type } = contact;
   const contactContext =useContext(ContactContext)
   const {deleteContent,setCurrent,clearCurrent}=contactContext
   const onDelete=()=>{
-    contactContext.deleteContent(id)
-    clearCurrent()
+    contactContext.deleteContent(_id)
+    //clearCurrent()
   }
   return (
     <div className="card bg-light m-3">
