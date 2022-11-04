@@ -83,7 +83,21 @@ const ContactState = (props) => {
     dispatch({ type: CLEAR_CURRENT });
   };
   //update contact
-  const updateContact = (contact) => {
+  const updateContact = async(contact) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    //contact.id = uuid.v4();
+    try {
+      const res=await axios.put(`/api/contact/${contact._id}`,contact,config)
+      //console.log(res)
+      dispatch({ type: UPDATE_CONTACT, payload: res.data });
+    } catch (error) {
+      dispatch({ type: CONTACT_ERROR, payload: error.response.msg });
+      //console.log(error.response.msg)
+    }
     dispatch({ type: UPDATE_CONTACT, payload: contact });
   };
   //filter contact
