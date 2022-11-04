@@ -1,6 +1,6 @@
 import axios from "axios";
 //import e from "express";
-const setAuthToken = (token) => {
+const setAuthToken =(token) => {
   if (token) {
     axios.defaults.headers.common["x-auth-token"] = token;
   } else {

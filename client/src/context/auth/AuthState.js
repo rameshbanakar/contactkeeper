@@ -12,6 +12,7 @@ import React, { useReducer } from "react";
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
 import axios from "axios";
+import setAuthToken from "../../utils/setAuthToken";
 const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
@@ -21,47 +22,85 @@ const AuthState = (props) => {
     error: null,
   };
   const [state, dispatch] = useReducer(AuthReducer, initialState);
-
-  const register = async (formData) => {
+   
+  //user loaded
+  const loadUser = async (token) => {
+    //@todo-load token into global headers
+    //console.log(localStorage.token)
+    if(token){
+      setAuthToken(token)
+    }
+    try {
+      const res = await axios.get("/api/auth");
+     // console.log(res)
+      dispatch({ type: USER_LOADED, payload: res.data });
+      //console.log(res)
+    } catch (err) {
+      //auth error
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+  const register = async formData=> {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      console.log(formData);
+      //console.log(formData);
       const res = await axios.post("/api/users", formData, config);
-      console.log(res);
+      //console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data,
+        payload: res.data.token,
       });
+      loadUser(res.data.token)
+      //console.log(res.data.token)
+      
     } catch (error) {
+      //console.log( error.response.data.msg)
       dispatch({
         //register fail
-
+        
         type: REGISTER_FAILE,
         payload: error.response.data.msg,
       });
     }
   };
 
-  //user loaded
-  const loadUser = async () => {
-    //@todo-load token into global headers
-
-    try {
-      const res = await axios.get("/api/auth");
-      dispatch({ type: USER_LOADED, payload: res.data });
-    } catch (err) {
-      //auth error
-      dispatch({ type: AUTH_ERROR });
-    }
-  };
+  
 
   //login success
-  //login fail
+  const login=async(data)=>{
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res=await axios.post("/api/auth",data,config)
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data.token,
+      });
+      loadUser(res.data.token)
+    } catch (error) {
+      
+      console.log(error.response.data)
+      dispatch({
+         //login fail
+        
+        type: LOGIN_FAIL,
+        payload: error.response.data,
+      });
+      
+    }
+  }
+ 
   //logout
+  const logout=()=>{
+    dispatch({type:LOGOUT})
+  }
   //clear error
   const clearError = () => {
     dispatch({ type: CLEAR_ERROR });
@@ -76,6 +115,9 @@ const AuthState = (props) => {
         user: state.user,
         clearError,
         register,
+        loadUser,
+        login,
+        logout
       }}
     >
       {props.children}

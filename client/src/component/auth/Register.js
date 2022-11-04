@@ -1,11 +1,28 @@
 import React, { useContext, useState ,useEffect} from "react";
 import AlertContext from "../../context/alert/AlertContext";
 import AuthContext from "../../context/auth/AuthContext";
-const Register = () => {
+//import { useHistory } from "react-router-dom";
+const Register = props => {
+  
+  //let history=useHistory()
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
   const { setAlert } = alertContext;
-  const { register,error ,clearError} = authContext;
+  const { register,error ,clearError,isAuthenticated} = authContext;
+  useEffect(()=>{
+    
+    if(isAuthenticated){
+      //props.history.push("/")
+      
+      setAlert("User registration success","success")
+      clearError()
+    }
+    if(error==="user already exists"){
+      setAlert(error,"danger")
+      clearError()
+    }
+    // eslint-disable-next-line
+  },[error,isAuthenticated])
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -31,12 +48,7 @@ const Register = () => {
     }
   };
 
-  useEffect(()=>{
-    if(error==="user already exists"){
-      setAlert(error,"danger")
-      clearError()
-    }
-  },[error])
+  
   return (
     <div className="form-container">
       <h3>Account Registration</h3>
