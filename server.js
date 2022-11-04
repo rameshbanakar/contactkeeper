@@ -6,9 +6,9 @@ const path=require("path")
 app.use(cors())
 connectDB();
 app.use(express.json({ extended: false }));
-app.get("/", (req, res) => {
-  res.send("welcome to contact keeper");
-});
+// app.get("/", (req, res) => {
+//   res.send("welcome to contact keeper");
+// });
 app.use("/api/users", require("./router/users"));
 app.use("/api/auth", require("./router/auth"));
 app.use("/api/contact", require("./router/contact"));
