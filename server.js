@@ -2,7 +2,8 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cors=require("cors")
 const app = express();
-const path=require("path")
+const path=require("path");
+const { maxHeaderSize } = require("http");
 app.use(cors())
 connectDB();
 app.use(express.json({ extended: false }));
